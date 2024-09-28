@@ -3,9 +3,9 @@
 
 :root {
     --bs-blue: #0d6efd;
-    --bs-indigo: #0d0d13c6;
-    --bs-purple: #1e0944;
 
+    /* --bs-indigo: #1717d1c6 !important;
+    --bs-purple: #3219c4 !important; */
 
     /* --bs-indigo: #6610f2;
     --bs-purple: #6f42c1; */
@@ -12663,4 +12663,4 @@ fieldset:disabled .btn {
     }
 }
 
-/*# sourceMappingURL=bootstrap.min.css.map */
+#sourceMappingURL=bootstrap.min.css.map
