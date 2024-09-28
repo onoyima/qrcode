@@ -1,0 +1,124 @@
+/* body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+} */
+
+/* .container {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 60%;
+    margin: 0 auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+} */
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"],
+input[type="file"],
+textarea {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+}
+
+#preview img {
+    margin-top: 20px;
+    width: 80%;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#modalLogo {
+    width: 50px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+#modalQRCode {
+    width: 200px;
+    height: auto;
+    margin: 20px 0;
+}
+
+#modalMessage {
+    color: #333;
+    font-size: 16px;
+}
+/* Unified styling for modal and banner */
+.modal-content, .banner {
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add some shadow for depth */
+}
+
+#modalLogo {
+    width: 100px; /* Adjust logo size */
+    height: auto;
+    margin-bottom: 10px;
+}
+
+#qrCodePreview {
+    width: 150px; /* Adjust QR code size */
+    height: auto;
+}
+
+#modalMessage {
+    color: #333;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}

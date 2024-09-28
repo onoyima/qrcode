@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Solutions Logo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+
+        .logo-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            width: 120px; /* Set fixed width for uniformity */
+            height: 120px; /* Set fixed height for uniformity */
+        }
+
+        /* Logo Styles */
+        .tech-icon {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            margin-right: 10px;
+        }
+
+        /* Concept 1: Gear */
+        .gear {
+            width: 40px;
+            height: 40px;
+            border: 5px solid #4CAF50; /* Green */
+            border-radius: 50%;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Concept 1: Node/Connection */
+        .node {
+            width: 10px;
+            height: 10px;
+            background-color: #FF9800; /* Orange */
+            border-radius: 50%;
+            position: absolute;
+            top: 20px;
+            left: 45px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Concept 2: Cloud */
+        .cloud {
+            width: 40px;
+            height: 25px;
+            background-color: #90CAF9; /* Light Blue */
+            border-radius: 20px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Concept 2: Node */
+        .cloud-node {
+            width: 10px;
+            height: 10px;
+            background-color: #FF9800; /* Orange */
+            border-radius: 50%;
+            position: absolute;
+            top: 15px;
+            left: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Concept 3: Network */
+        .network {
+            width: 40px;
+            height: 40px;
+            border: 5px solid #2196F3; /* Blue */
+            border-radius: 50%;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Text Style */
+        .tech-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333; /* Dark Gray */
+            text-align: center;
+            font-family: 'Arial', sans-serif; /* Modern font */
+        }
+
+        #downloadBtn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50; /* Green */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container" id="logoContainer">
+        <!-- IT Solutions Logo Concept 1 -->
+        <!-- <div class="logo" id="logo1">
+            <div class="tech-icon">
+                <div class="gear"></div>
+                <div class="node"></div>
+            </div>
+            <div class="tech-text">IT Solutions</div>
+        </div> -->
+
+        <!-- IT Solutions Logo Concept 2 -->
+        <!-- <div class="logo" id="logo2">
+            <div class="tech-icon">
+                <div class="cloud"></div>
+                <div class="cloud-node"></div>
+            </div>
+            <div class="tech-text">IT Solutions</div>
+        </div> -->
+
+        <!-- IT Solutions Logo Concept 3 -->
+        <div class="logo" id="logo3">
+            <div class="tech-icon">
+                <div class="network"></div>
+            </div>
+            <div class="tech-text">IT Solutions</div>
+        </div>
+    </div>
+    <button id="downloadBtn">Download Selected Logo as PNG</button>
+
+    <script>
+        document.getElementById('downloadBtn').addEventListener('click', function () {
+            const selectedLogo = document.querySelector('.logo-container .logo'); // Change this to target the selected logo
+            html2canvas(selectedLogo, {
+                backgroundColor: null, // Ensures transparency
+                useCORS: true // Allows cross-origin images
+            }).then(function (canvas) {
+                const link = document.createElement('a');
+                link.download = 'it-solutions-logo.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }).catch(function(error) {
+                console.error('Error generating canvas:', error);
+            });
+        });
+    </script>
+</body>
+</html>

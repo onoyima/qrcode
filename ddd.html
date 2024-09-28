@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QRCodeExport: Personalized QR Banner Generator</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <!-- Favicons -->
+  <link href="assets/images/favicon.png" rel="icon">
+  <link href="assets/images/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&amp;family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com/">
+  <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400&amp;display=swap" rel="stylesheet">
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/stylesheets/font-awesome.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <!-- Main CSS File -->
+  <link href="assets/stylesheets/styles.css" rel="stylesheet">
+
+    <style>
+        /* Modal styles */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.4); 
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; 
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>QRCodeExport: Create Your Banner</h1>
+        
+        <div class="col-lg-8 col-md-12" data-aos="fade-left"> 
+            <div class="contact-form-box contact-form contact-form-3">
+                <div class="form-container-box">
+                    <form class="contact-form form" id="qrForm" enctype="multipart/form-data">
+                        <div class="controls">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group form-input-box">
+                                        <input type="text" class="form-control" id="link" name="link" placeholder="Paste your link" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group form-input-box">
+                                        <input type="file" class="form-control" name="logo" id="logo" placeholder="Logo" required="required">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group form-input-box">
+                                        <textarea class="form-control" id="message" name="message" rows="2" placeholder="Write Your Message*" required="required" data-error="Please, leave a message."></textarea>
+                                        <div class="help-block with-errors"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" data-text="Generate">Generate Banner</button>
+                                </div>
+                                <div class="messages">
+                                    <div class="alert alert-success alert-dismissable hidden" id="msgSubmit">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> 
+                                        Thank You! your message has been sent. 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="preview"></div>
+        <div id="message" style="color: red;"></div> <!-- Added for messages -->
+
+        <!-- Modal for QR code preview -->
+        <div id="qrModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="modalLogoContainer">
+                    <img id="modalLogo" src="" alt="Logo" style="width: 50px; height: auto;"> 
+                    <h5 id="modalMessage"></h5>
+                </div>
+                <br>       
+                <img id="qrCodePreview" src="" alt="QR Code Preview" style="width: 200px;"> <!-- QR code display -->
+                <br>
+                <button id="downloadModalAsImage">Download</button>
+            </div>
+        </div>
+
+    </div>
+    <script src="assets/script.js"></script>
+    <script>
+        document.getElementById('qrForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            var formData = new FormData(this);
+            document.getElementById('message').innerText = ''; // Clear previous messages
+
+            fetch('generate.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('message').innerText = data.error; // Display error message
+                } else if (data.banner) {
+                    document.getElementById('preview').innerHTML = `
+                        <img src="${data.banner}" alt="Banner Preview" style="width: 200px;">
+                        <a href="export.php?file=${data.banner}" download>Download as PDF</a>
+                    `;
+                    document.getElementById('message').innerText = 'Banner generated successfully!'; // Success message
+
+                    // Set logo, message, and QR code in modal
+                    document.getElementById('modalLogo').src = URL.createObjectURL(document.getElementById('logo').files[0]); // Display uploaded logo
+                    document.getElementById('modalMessage').innerText = document.getElementById('message').value; // Display message
+                    document.getElementById('qrCodePreview').src = data.qrCode; // Set QR code
+
+                    // Show the modal
+                    document.getElementById('qrModal').style.display = "flex";
+                }
+            });
+        });
+
+        // Add the following script to capture the modal as an image and download
+        document.getElementById('downloadModalAsImage').addEventListener('click', function() {
+            const modal = document.querySelector('.modal-content');
+
+            html2canvas(modal).then(canvas => {
+                const link = document.createElement('a');
+                link.download = `${document.getElementById('message').value}.png`; // Save with input message as filename
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        });
+
+        // Close the modal when the user clicks the close button
+        document.querySelector('.close').onclick = function () {
+            document.getElementById('qrModal').style.display = "none";
+        };
+    </script>
+</body>
+</html>
